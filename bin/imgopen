@@ -1,0 +1,4 @@
+#!/bin/sh
+file=$(basename "$1")
+number=$(ls -1p "$2" | grep -v '/' | grep -n "$file" | cut -d ':' -f1)
+sxiv "$PWD" -n "$number"

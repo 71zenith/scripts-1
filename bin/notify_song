@@ -1,0 +1,6 @@
+#!/bin/sh
+full=$(mocp -M ~/.config/moc -Q %file 2> /dev/null | sed 's/.mp3//')
+song=${full##*/}
+folder=$(dirname "$full")
+folder=${folder##*/}
+notify-send "🎵 Now playing 🎵" "$folder - $song"

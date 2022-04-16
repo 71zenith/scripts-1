@@ -1,0 +1,21 @@
+#!/bin/sh
+file="/tmp/hiddenid$1"
+unhide() {
+    bspc node "$(cat "$file")" -g hidden=off && bspc node -f "$(cat "$file")" && rm -rf "$file"
+}
+hide() {
+    bspc query -N -n .focused > "$file" && bspc node -g hidden=on
+}
+check() {
+    if [ -f "$file" ];
+    then
+        if [ "$(cat "$file")" = "" ]; then
+            hide
+        else
+            unhide
+        fi
+    else
+        hide
+    fi
+}
+check

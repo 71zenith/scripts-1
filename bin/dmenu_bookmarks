@@ -1,0 +1,21 @@
+#!/bin/sh
+query="$(printf "Youtube\nMonkeytype\nProtonmail\n9Anime\nGithub\nHomepage" | dmenu -i -p 'Search:')"
+browser="$1"
+[ -z "$query" ] && exit
+check_url() {
+    url="$(echo "$query" | grep -Eo '(https:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)')"
+	if [ "$url" = "$query" ]; then
+		$browser --new-tab "$url"
+	else
+		$browser --new-tab "https://search.brave.com/search?q=$query&source=desktop"
+	fi
+}
+case "$query" in
+		"Youtube") $browser --new-tab https://www.youtube.com ;;
+		"Protonmail") $browser --new-tab https://mail.protonmail.com/u/0/inbox ;;
+		"Github") $browser --new-tab https://github.com/71zenith ;;
+		"Homepage") $browser --new-tab ;;
+		"Monkeytype") $browser --new-tab https://monkeytype.com/ ;;
+		"9Anime") $browser --new-tab https://9anime.to ;;
+    *) check_url ;;
+esac

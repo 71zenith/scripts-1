@@ -1,0 +1,3 @@
+#!/bin/sh
+killall bspswallow
+"$@" > /dev/null & sleep 1 && bspswallow > /dev/null &
