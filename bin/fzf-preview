@@ -1,0 +1,15 @@
+#!/bin/sh
+[ -z "$1" ] && exit 1
+mime=$(file -bL --mime-type "$1")
+kind=${mime##*/}
+if [ -d "$1" ]; then
+	ls -1 --color=always "$1"
+elif [ "$kind" = "x-tar" ]; then
+	tar tf "$1"
+elif [ "$kind" = "zip" ]; then
+	zipinfo -1 "$1"
+elif [ "$kind" = "troff" ]; then
+	man "$1" | col -b
+else
+	bat --color=always "$1"
+fi
